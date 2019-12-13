@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        left: 50%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+    
+  <body>
+    <button id="center">ReCenter</button>
+    <div id="map"></div>
+    
+    
+    
+    <script>
+      
+      var map;
+      
+      
+      var btn_center = document.getElementById("center");
+      btn_center.onclick = function() {
+        btn_center.style.backgroundColor="red";
+        map.center.lat=24.7914224;
+        map.center.lng=120.99686399999999;
+      }
+      
+      
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 24.7914224, lng: 120.99686399999999},
+          zoom: 18
+        });
+      }
+      
+      document.addEventListener();
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7p1JKKdcDXaXdBRh6xZ0FdtMOxxTm1LM&callback=initMap"
+    async defer></script>
+  </body>
+</html>

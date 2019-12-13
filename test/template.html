@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>ICN Final Project API Example</h1>
+
+<button id= "test_button">Call API</button>
+<div>
+	<h2> Barometer value: </h2>
+	<p id="barometer">First Barometer value</p>
+</div>
+<div>
+    <h2> Humudity value: </h2>
+	<p id="humidity">First Humudity value</p>
+</div>
+<div>
+    <h2> Temperature value: </h2>
+	<p id="temperature">First Temperature value</p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/JavaScript">
+	var AccessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY1NmY0NjVhZDdlZTRmMmU2MGY4YTFlODRhZmFmNTUzYzcwYTBhYTk4ZjE3ZjFiMTM1ZWJjMGMwNzcxZWJiMzQyMjAyYzJmZjlkNzBiYWVhIn0.eyJhdWQiOiIyIiwianRpIjoiNjU2ZjQ2NWFkN2VlNGYyZTYwZjhhMWU4NGFmYWY1NTNjNzBhMGFhOThmMTdmMWIxMzVlYmMwYzA3NzFlYmIzNDIyMDJjMmZmOWQ3MGJhZWEiLCJpYXQiOjE1NzYyMjAzNzQsIm5iZiI6MTU3NjIyMDM3NCwiZXhwIjoxNjA3ODQyNzc0LCJzdWIiOiIyNDMiLCJzY29wZXMiOltdfQ.EYcCD-gsNSKSK4YgTS1BhZytAlHFrQMe8v7IlzABe8Iufj1Hglt9sVe327c0s2_YqJS3WSGv3CUu2ogTtA1KzzRuGXk0a0nT3NXsNNhxrDI6KJaSPu6dEsYrUEnU2d3UbX9hHz_LwLuki_DR_L4j_olfyJ8unM-eJp4hSQNrK85Z5owWQPSlRvIWYoPyekqH5bU59KTUU4gSYMYKryQ5PMCm1hhmRe_UneGzUDD3ofiaAxV1yHMp8esjGh6pTNB5FLSqEq036H81UxTYzvXSEL0p7sQPbD7jqw7RHRwwXauVcjV42Zp-TdjYzTsACGzhj7FjoDnBxmhWWXont1IPpp1ChrIrD_W4lHub2vp1zD6lg5MROWEIDVQ3ejzMZYFu7xhqQux8Idjj30KrGt7Acvcv-hth36EG4dHJM4uLCrFW6PM2mxPWHQMvr2yd7P9MtV8ZW9DdBoJVGwoJka4XNLAbZGw55m7HXKZPEcvvlDPpmvTOHKk2DDR7uzRfXPvc8xDNfDZx4ksqMpvepuzJkBwgkVn1CZi3rsDDFgwZVWQkMEtRKlKZj4TaodiIf-iKfg-p6uP-0mn6orj0CI4LafyuFKJhLT8Si8NTNsUPYYYhfk8_87tSGWRmZb66OjcisU0NqD7TAiZzWv6RpRGHIOE3UQ3RPwvrBx7OH2F7L6M";
+	$(document).ready(function() {
+		$("#test_button").click(function() {
+			var macaddr = "?macaddr=" + "aa37d395";
+			var date_filter = "&date_filter=" + "2019-12-09 12:00:00+-+2019-12-15 11:59:00";
+			var data_array;
+			$.ajax({
+				type: "POST",
+				url: "https://campus.kits.tw/ICN_API" + macaddr + date_filter,
+				dataType: "json",
+				async: false,
+				success: function(response) {
+					console.log(response);
+					data_array = response;
+					document.getElementById("barometer").innerHTML = response[0]['barometer'] + " hPA";
+					document.getElementById("humidity").innerHTML = response[0]['humidity']  + " %";
+					document.getElementById("temperature").innerHTML = response[0]['temperature'] + " Celsius degree";
+				},
+				headers: {
+					'Accept': 'application/json',
+					'Authorization': 'Bearer ' + AccessToken
+				},
+				error: function(jqXHR) {
+					//alert("Return status: " + jqXHR.status);
+					if(jqXHR.status == '200')
+						alert("API calling error: macaddr or url format error!");
+					else
+						alert("API is sleeping !");
+				}
+			})
+		})
+	});
+</script>
+
+</body>
+</html>
