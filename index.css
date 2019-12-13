@@ -2,21 +2,32 @@
 * element that contains the map. */
 #map {
     height: 100%;
-    width: 50%;
+    width: 70%;
     float: left;
 }
 #panel {
-    width: 50%;
+    width: 30%;
     height: 100%;
-    padding: 10px 40px;
     box-sizing: border-box;
+    padding: 0px;
     float: left;
     background-color: rgb(17,16,22);
     color: white;
     font-family: Baloo Bhai;
 }
+#header {
+    padding: 10px 0px 0px 40px;
+    background-color: white;
+    color: black;
+    height: 80px;
+}
+#content {
+    padding: 30px 40px;
+}
 h1 {
     font-family: Baloo Bhai;
+    margin: 0px;
+    padding: 0px;
 }
 #btn_get_bike_loc {
     text-transform: none;
