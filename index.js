@@ -1,5 +1,5 @@
 var map;
-var now_location = null ;
+var now_location = {lat: 0, lng: 0};
 var AccessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY1NmY0NjVhZDdlZTRmMmU2MGY4YTFlODRhZmFmNTUzYzcwYTBhYTk4ZjE3ZjFiMTM1ZWJjMGMwNzcxZWJiMzQyMjAyYzJmZjlkNzBiYWVhIn0.eyJhdWQiOiIyIiwianRpIjoiNjU2ZjQ2NWFkN2VlNGYyZTYwZjhhMWU4NGFmYWY1NTNjNzBhMGFhOThmMTdmMWIxMzVlYmMwYzA3NzFlYmIzNDIyMDJjMmZmOWQ3MGJhZWEiLCJpYXQiOjE1NzYyMjAzNzQsIm5iZiI6MTU3NjIyMDM3NCwiZXhwIjoxNjA3ODQyNzc0LCJzdWIiOiIyNDMiLCJzY29wZXMiOltdfQ.EYcCD-gsNSKSK4YgTS1BhZytAlHFrQMe8v7IlzABe8Iufj1Hglt9sVe327c0s2_YqJS3WSGv3CUu2ogTtA1KzzRuGXk0a0nT3NXsNNhxrDI6KJaSPu6dEsYrUEnU2d3UbX9hHz_LwLuki_DR_L4j_olfyJ8unM-eJp4hSQNrK85Z5owWQPSlRvIWYoPyekqH5bU59KTUU4gSYMYKryQ5PMCm1hhmRe_UneGzUDD3ofiaAxV1yHMp8esjGh6pTNB5FLSqEq036H81UxTYzvXSEL0p7sQPbD7jqw7RHRwwXauVcjV42Zp-TdjYzTsACGzhj7FjoDnBxmhWWXont1IPpp1ChrIrD_W4lHub2vp1zD6lg5MROWEIDVQ3ejzMZYFu7xhqQux8Idjj30KrGt7Acvcv-hth36EG4dHJM4uLCrFW6PM2mxPWHQMvr2yd7P9MtV8ZW9DdBoJVGwoJka4XNLAbZGw55m7HXKZPEcvvlDPpmvTOHKk2DDR7uzRfXPvc8xDNfDZx4ksqMpvepuzJkBwgkVn1CZi3rsDDFgwZVWQkMEtRKlKZj4TaodiIf-iKfg-p6uP-0mn6orj0CI4LafyuFKJhLT8Si8NTNsUPYYYhfk8_87tSGWRmZb66OjcisU0NqD7TAiZzWv6RpRGHIOE3UQ3RPwvrBx7OH2F7L6M";
 
 $(document).ready(function() {
@@ -19,8 +19,8 @@ $(document).ready(function() {
         else hour_before = ((date.getHours()-1)).toString();
         if ((date.getHours()+1) < 10) hour_after = "0" + (date.getMonth()+1).toString();
         else hour_after = ((date.getHours()+1)).toString();
-        var date_filter = "&date_filter=" + date_s + hour_before + ":00:00+-+" + date_s + hour_after + ":00:00";
-        //var date_filter = "&date_filter=" + "2019-12-13 12:00:00+-+2019-12-15 11:59:00";
+        //var date_filter = "&date_filter=" + date_s + hour_before + ":00:00+-+" + date_s + hour_after + ":00:00";
+        var date_filter = "&date_filter=" + "2019-12-13 12:00:00+-+2019-12-15 11:59:00";
         //console.log(date_filter);
 
         var data_array;
@@ -34,9 +34,18 @@ $(document).ready(function() {
                 console.log(response.length);
                 for (var i = response.length-1; i >= 0; i--) {
                     if (response[i]['lng'] !== null && response[i]['lat'] !== null) {
-                        now_location = {lat: response[i]['iat'], lng: response[i]['ing']};
                         document.getElementById("span_lng").innerHTML = response[i]['lng'];
                         document.getElementById("span_lat").innerHTML = response[i]['lat'];
+                        // draw marker
+                        now_location['lat'] = parseFloat(response[i]['lat']); 
+                        now_location['lng'] = parseFloat(response[i]['lng']);
+                        var marker = new google.maps.Marker({
+                            position: now_location, 
+                            title:"your bicycle"
+                        });
+                        
+                        // To add the marker to the map, call setMap();
+                        marker.setMap(map);
                         break;
                     }
                 }
@@ -62,20 +71,7 @@ function initMap() {
         center: {lat: 24.7914224, lng: 120.99686399999999},
         zoom: 18
     });
-
 }
-// button function
-// TODO : time delay problem for http reponse and click function
-$("#btn_get_bike_loc").click(function () {
-    console.log("click detected ");
-    var marker = new google.maps.Marker({
-        //position: now_location, 
-        position: {lat: 24.7914224, lng: 120.99686399999999}, 
-        title:"your bicycle"
-    });
-    
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);
-});
+
 
     
