@@ -11,8 +11,8 @@
     box-sizing: border-box;
     padding: 0px;
     float: left;
-    background-color: rgb(17,16,22);
-    color: white;
+    background-color: white;
+    color: black;
     font-family: Baloo Bhai;
 }
 #header {
@@ -20,12 +20,13 @@
     background-color: white;
     color: black;
     height: 80px;
+    box-shadow: 0px 4px 3px #ccc;
 }
 #content {
     padding: 30px 40px;
 }
 h1 {
-    font-family: Baloo Bhai;
+    font-family: Noto Sans, Baloo Bhai;
     margin: 0px;
     padding: 0px;
 }
@@ -35,34 +36,23 @@ h1 {
     background-color: white;
     margin: 10px 0px;
 }
+#btn_today_weather {
+    text-transform: none;
+    font-weight: 700;
+    background-color: white;
+    margin: 10px 0px;
+}
+#btn_bicycle {
+    text-transform: none;
+    font-weight: 700;
+    background-color: white;
+    margin: 10px 0px;
+}
 span {
-    font-size: large;
+    font-size: 24px;
 }
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-#weather {
-    padding-top: 60%;
-    padding-right: 0%;
-    padding-left: 3%;
-    padding-bottom : 0%;
-}
-#weather img{
-    width: 15%;
-    height: 15%;
-    margin : 0%;
-}
-
-#lock {
-    padding-top: 5%;
-    padding-right: 0%;
-    padding-left: 3%;
-    padding-bottom : 0%;
-}
-#lock img{
-    width: 15%;
-    height: 15%;
-    margin: 0%;
 }
