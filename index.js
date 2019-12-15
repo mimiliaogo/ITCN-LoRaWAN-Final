@@ -23,7 +23,7 @@ $(document).ready(function() {
         var date_filter = "&date_filter=" + "2019-12-13 12:00:00+-+2019-12-15 11:59:00";
         //console.log(date_filter);
 
-        var data_array;
+        // send request
         $.ajax({
             type: "POST",
             url: "https://campus.kits.tw/ICN_API" + macaddr + date_filter,
@@ -61,7 +61,7 @@ $(document).ready(function() {
                     alert("API calling error: macaddr or url format error!");
                 else
                     alert("API is sleeping !");
-            }
+            },
         })
     })
 });
@@ -73,5 +73,8 @@ function initMap() {
     });
 }
 
+function today_weather () {
+    console.log ("i will request data");
+}
 
     
