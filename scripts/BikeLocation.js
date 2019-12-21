@@ -22,13 +22,8 @@ $(document).ready(function() {
                         // draw marker
                         now_location['lat'] = parseFloat(response[i]['lat']);
                         now_location['lng'] = parseFloat(response[i]['lng']);
-                        var marker = new google.maps.Marker({
-                            position: now_location,
-                            title: "your bicycle"
-                        });
 
-                        // To add the marker to the map, call setMap();
-                        marker.setMap(map);
+                        googleMapMarker()
                         break;
                     }
                 }
@@ -48,12 +43,32 @@ $(document).ready(function() {
         })
     })
 });
+function googleMapMarker () {
+    var marker = new google.maps.Marker({
+        position: now_location,
+        title: "your bicycle",
+        label:"B",
+        map:map
+    });
+    var contentString = "your bicycle here !";
+
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
+    // To add the marker to the map, call setMap();
+    marker.setMap(map);
+}
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 24.7914224, lng: 120.99686399999999 },
         zoom: 18
     });
+    
 }
 
 function calculate_date_filter() {
@@ -75,54 +90,3 @@ function calculate_date_filter() {
     return date_filter;
 }
 
-// TODO : maybe get data from cbw ?
-$("#btn_today_weather").click(function() {
-    // send request
-    $.ajax({
-        type: "POST",
-        url: "https://campus.kits.tw/ICN_API" + macaddr + calculate_date_filter(),
-        dataType: "json",
-        async: false,
-        success: function(response) {
-            for (var i = response.length - 1; i >= 0; --i) {
-                if (response[i]['humidity'] != null) {
-                    console.log("humidity is " + response[i]['humidity']);
-                }
-            }
-        },
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + AccessToken
-        },
-        error: function(jqXHR) {
-            //alert("Return status: " + jqXHR.status);
-            if (jqXHR.status == '200')
-                alert("API calling error: macaddr or url format error!");
-            else
-                alert("API is sleeping !");
-        },
-    })
-})
-$("#btn_bicycle").click(function() {
-    // send request
-    $.ajax({
-        type: "POST",
-        url: "https://campus.kits.tw/ICN_API" + macaddr + calculate_date_filter(),
-        dataType: "json",
-        async: false,
-        success: function(response) {
-            console.log("bicycle");
-        },
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + AccessToken
-        },
-        error: function(jqXHR) {
-            //alert("Return status: " + jqXHR.status);
-            if (jqXHR.status == '200')
-                alert("API calling error: macaddr or url format error!");
-            else
-                alert("API is sleeping !");
-        },
-    })
-})
