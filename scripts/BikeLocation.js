@@ -1,4 +1,5 @@
 var map;
+var panorama;
 var now_location = { lat: 0, lng: 0 };
 var AccessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY1NmY0NjVhZDdlZTRmMmU2MGY4YTFlODRhZmFmNTUzYzcwYTBhYTk4ZjE3ZjFiMTM1ZWJjMGMwNzcxZWJiMzQyMjAyYzJmZjlkNzBiYWVhIn0.eyJhdWQiOiIyIiwianRpIjoiNjU2ZjQ2NWFkN2VlNGYyZTYwZjhhMWU4NGFmYWY1NTNjNzBhMGFhOThmMTdmMWIxMzVlYmMwYzA3NzFlYmIzNDIyMDJjMmZmOWQ3MGJhZWEiLCJpYXQiOjE1NzYyMjAzNzQsIm5iZiI6MTU3NjIyMDM3NCwiZXhwIjoxNjA3ODQyNzc0LCJzdWIiOiIyNDMiLCJzY29wZXMiOltdfQ.EYcCD-gsNSKSK4YgTS1BhZytAlHFrQMe8v7IlzABe8Iufj1Hglt9sVe327c0s2_YqJS3WSGv3CUu2ogTtA1KzzRuGXk0a0nT3NXsNNhxrDI6KJaSPu6dEsYrUEnU2d3UbX9hHz_LwLuki_DR_L4j_olfyJ8unM-eJp4hSQNrK85Z5owWQPSlRvIWYoPyekqH5bU59KTUU4gSYMYKryQ5PMCm1hhmRe_UneGzUDD3ofiaAxV1yHMp8esjGh6pTNB5FLSqEq036H81UxTYzvXSEL0p7sQPbD7jqw7RHRwwXauVcjV42Zp-TdjYzTsACGzhj7FjoDnBxmhWWXont1IPpp1ChrIrD_W4lHub2vp1zD6lg5MROWEIDVQ3ejzMZYFu7xhqQux8Idjj30KrGt7Acvcv-hth36EG4dHJM4uLCrFW6PM2mxPWHQMvr2yd7P9MtV8ZW9DdBoJVGwoJka4XNLAbZGw55m7HXKZPEcvvlDPpmvTOHKk2DDR7uzRfXPvc8xDNfDZx4ksqMpvepuzJkBwgkVn1CZi3rsDDFgwZVWQkMEtRKlKZj4TaodiIf-iKfg-p6uP-0mn6orj0CI4LafyuFKJhLT8Si8NTNsUPYYYhfk8_87tSGWRmZb66OjcisU0NqD7TAiZzWv6RpRGHIOE3UQ3RPwvrBx7OH2F7L6M";
 var macaddr = "?macaddr=" + "aa37d395"; // the mac address of the LoRaWan device
@@ -43,30 +44,48 @@ $(document).ready(function() {
         })
     })
 });
+
 function googleMapMarker () {
     var marker = new google.maps.Marker({
         position: now_location,
         title: "your bicycle",
-        label:"B",
-        map:map
+        label:"Here",
     });
-    var contentString = "your bicycle here !";
+    var contentString = "your bicycle here !\n press street view to see where your bicycle in real";
 
     var infowindow = new google.maps.InfoWindow({
-        content: contentString
+        content: contentString,
     });
 
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
-    });
+    infowindow.open(map, marker);
     // To add the marker to the map, call setMap();
+
+    // street view 
+    panorama = map.getStreetView();
+    panorama.setPosition(now_location);
+    panorama.setPov(/** @type {google.maps.StreetViewPov} */({
+        heading: 0,
+        pitch: 0
+    }));
+
+
     marker.setMap(map);
+}
+// for street view
+function toggleStreetView() {
+  var toggle = panorama.getVisible();
+  if (toggle == false) {
+    panorama.setVisible(true);
+  } else {
+    panorama.setVisible(false);
+  }
 }
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 24.7914224, lng: 120.99686399999999 },
-        zoom: 18
+        zoom: 18,
+        streetViewControl: false
     });
     
 }
@@ -89,4 +108,5 @@ function calculate_date_filter() {
     var date_filter = "&date_filter=" + "2019-12-13 12:00:00+-+2019-12-15 11:59:00";
     return date_filter;
 }
+
 
