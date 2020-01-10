@@ -35,7 +35,7 @@ def update():
     for d in data:
         if (d['acc_x'] != None):
             print(d['acc_x'])
-            send_to_telebot('Vibrate')
+            send_to_telebot('Detect bike moving at ' + x.strftime("%H:%M:%S"))
 
 
 setInterval(update, 60)
