@@ -24,7 +24,7 @@ def setInterval(func,time):
 def update():
     print("updating")
     x = datetime.now()
-    y = x - timedelta(hours = 0, minutes = 1)
+    y = x - timedelta(hours = 0, minutes = 0, seconds = 10)
     timerange = y.strftime("%Y-%m-%d %H:%M:%S") + " +-+ " + x.strftime("%Y-%m-%d %H:%M:%S")
     url = "https://campus.kits.tw/api/get/data/aa37d395?date_filter=" + timerange
     print(timerange)
@@ -35,7 +35,7 @@ def update():
     for d in data:
         if (d['acc_x'] != None):
             print(d['acc_x'])
-            send_to_telebot('Detect bike moving at ' + x.strftime("%H:%M:%S"))
+            send_to_telebot('Detect bike moving at ' + d['created_at'])
 
 
-setInterval(update, 60)
+setInterval(update, 10)
