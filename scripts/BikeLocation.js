@@ -3,9 +3,10 @@ var panorama;
 var now_location = { lat: 0, lng: 0 };
 var AccessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY1NmY0NjVhZDdlZTRmMmU2MGY4YTFlODRhZmFmNTUzYzcwYTBhYTk4ZjE3ZjFiMTM1ZWJjMGMwNzcxZWJiMzQyMjAyYzJmZjlkNzBiYWVhIn0.eyJhdWQiOiIyIiwianRpIjoiNjU2ZjQ2NWFkN2VlNGYyZTYwZjhhMWU4NGFmYWY1NTNjNzBhMGFhOThmMTdmMWIxMzVlYmMwYzA3NzFlYmIzNDIyMDJjMmZmOWQ3MGJhZWEiLCJpYXQiOjE1NzYyMjAzNzQsIm5iZiI6MTU3NjIyMDM3NCwiZXhwIjoxNjA3ODQyNzc0LCJzdWIiOiIyNDMiLCJzY29wZXMiOltdfQ.EYcCD-gsNSKSK4YgTS1BhZytAlHFrQMe8v7IlzABe8Iufj1Hglt9sVe327c0s2_YqJS3WSGv3CUu2ogTtA1KzzRuGXk0a0nT3NXsNNhxrDI6KJaSPu6dEsYrUEnU2d3UbX9hHz_LwLuki_DR_L4j_olfyJ8unM-eJp4hSQNrK85Z5owWQPSlRvIWYoPyekqH5bU59KTUU4gSYMYKryQ5PMCm1hhmRe_UneGzUDD3ofiaAxV1yHMp8esjGh6pTNB5FLSqEq036H81UxTYzvXSEL0p7sQPbD7jqw7RHRwwXauVcjV42Zp-TdjYzTsACGzhj7FjoDnBxmhWWXont1IPpp1ChrIrD_W4lHub2vp1zD6lg5MROWEIDVQ3ejzMZYFu7xhqQux8Idjj30KrGt7Acvcv-hth36EG4dHJM4uLCrFW6PM2mxPWHQMvr2yd7P9MtV8ZW9DdBoJVGwoJka4XNLAbZGw55m7HXKZPEcvvlDPpmvTOHKk2DDR7uzRfXPvc8xDNfDZx4ksqMpvepuzJkBwgkVn1CZi3rsDDFgwZVWQkMEtRKlKZj4TaodiIf-iKfg-p6uP-0mn6orj0CI4LafyuFKJhLT8Si8NTNsUPYYYhfk8_87tSGWRmZb66OjcisU0NqD7TAiZzWv6RpRGHIOE3UQ3RPwvrBx7OH2F7L6M";
 var macaddr = "?macaddr=" + "aa37d395"; // the mac address of the LoRaWan device
+var sendNotificationTimeInterval = 1000;
 
-$(document).ready(function() {
-    $("#btn_get_bike_loc").click(function() {
+$(document).ready(function () {
+    $("#btn_get_bike_loc").click(function () {
         var date_filter = calculate_date_filter();
         // send request
         $.ajax({
@@ -13,7 +14,7 @@ $(document).ready(function() {
             url: "https://campus.kits.tw/ICN_API" + macaddr + date_filter,
             dataType: "json",
             async: false,
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 console.log(response.length);
                 for (var i = response.length - 1; i >= 0; i--) {
@@ -34,7 +35,7 @@ $(document).ready(function() {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + AccessToken
             },
-            error: function(jqXHR) {
+            error: function (jqXHR) {
                 //alert("Return status: " + jqXHR.status);
                 if (jqXHR.status == '200')
                     alert("API calling error: macaddr or url format error!");
@@ -45,11 +46,11 @@ $(document).ready(function() {
     })
 });
 
-function googleMapMarker () {
+function googleMapMarker() {
     var marker = new google.maps.Marker({
         position: now_location,
         title: "your bicycle",
-        label:"Here",
+        label: "Here",
     });
     var contentString = "your bicycle here !\n press street view to see where your bicycle in real";
 
@@ -73,12 +74,12 @@ function googleMapMarker () {
 }
 // for street view
 function toggleStreetView() {
-  var toggle = panorama.getVisible();
-  if (toggle == false) {
-    panorama.setVisible(true);
-  } else {
-    panorama.setVisible(false);
-  }
+    var toggle = panorama.getVisible();
+    if (toggle == false) {
+        panorama.setVisible(true);
+    } else {
+        panorama.setVisible(false);
+    }
 }
 
 function initMap() {
@@ -87,7 +88,7 @@ function initMap() {
         zoom: 18,
         streetViewControl: false
     });
-    
+
 }
 
 function calculate_date_filter() {
@@ -104,9 +105,99 @@ function calculate_date_filter() {
     else hour_before = ((date.getHours() - 1)).toString();
     if ((date.getHours() + 1) < 10) hour_after = "0" + (date.getMonth() + 1).toString();
     else hour_after = ((date.getHours() + 1)).toString();
-    // var date_filter = "&date_filter=" + date_s + hour_before + ":00:00+-+" + date_s + hour_after + ":00:00";
-    var date_filter = "&date_filter=" + "2019-12-13 12:00:00+-+2019-12-15 11:59:00";
+    //var date_filter = "&date_filter=" + date_s + hour_before + ":00:00+-+" + date_s + hour_after + ":00:00";
+    var date_filter = "&date_filter=" + "2020-01-01 11:22:00+-+2020-01-10 11:22:00";
     return date_filter;
 }
 
 
+// notification
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function () {
+    if (!Notification) {
+        alert('Desktop notifications not available in your browser. Try Chromium.');
+        return;
+    }
+
+    if (Notification.permission !== 'granted') {
+        Notification.requestPermission();
+    }
+    //var fuck = setInterval(notify, sendNotificationTimeInterval);
+});
+
+function notify() {
+    var closeNotificationTime = 1000;
+    // check if the browser supports notifications
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+    }
+    // check if the user is okay to get some notification
+    else if (Notification.permission === "granted") {
+        // If it's okay let's create a notification
+        var notification = new Notification("Vibrate!!");
+    }
+    //  ask the user for permission
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+
+            // Whatever the user answers, we make sure we store the information
+            if (!('permission' in Notification)) {
+                Notification.permission = permission;
+            }
+
+            // If the user is okay, let's create a notification
+            if (permission === "granted") {
+                var notification = new Notification("Hi there!");
+            }
+        });
+    } else {
+        alert(`Permission is ${Notification.permission}`);
+    }
+    setTimeout(function() { notification.close() }, closeNotificationTime);
+}
+var previousState = null;
+fsm();
+function fsm () {
+    var nowTimeData = null;
+    // request data 
+    $.ajax({
+        type: "POST",
+        url: "https://campus.kits.tw/ICN_API" + macaddr + calculate_date_filter(),
+        dataType: "json",
+        async: false,
+        success: function (response) {
+            // TODO : assume this get the now time data
+            let flag = 1;
+            for (let index = 0; index < response.length; index++) {
+                if (response[index]['acc_x'] != null ||
+                    response[index]['acc_y'] != null ||
+                    response[index]['acc_z'] != null)  {
+                    console.log(response[index]);
+                    nowTimeData = response[index];
+                    flag = 0;
+                }
+            }
+            if (flag == 1)  {
+                console.log("fuck");
+            }
+        },
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + AccessToken
+        },
+        error: function (jqXHR) {
+            //alert("Return status: " + jqXHR.status);
+            if (jqXHR.status == '200')
+                alert("API calling error: macaddr or url format error!");
+            else
+                alert("API is sleeping !");
+        },
+    })
+    if (previousState == null)  {
+        if (nowTimeData != null ) {
+            // notificate
+            var notification = new Notification("Vibrate!!");
+        }
+    }
+    previousState = nowTimeData;
+}
