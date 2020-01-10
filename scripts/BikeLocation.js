@@ -24,7 +24,7 @@ $(document).ready(function () {
                         // draw marker
                         now_location['lat'] = parseFloat(response[i]['lat']);
                         now_location['lng'] = parseFloat(response[i]['lng']);
-
+                        
                         googleMapMarker()
                         break;
                     }
