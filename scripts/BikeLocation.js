@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (Notification.permission !== 'granted') {
         Notification.requestPermission();
     }
-    //var fuck = setInterval(notify, sendNotificationTimeInterval);
+    var _adslf = setInterval(notify, sendNotificationTimeInterval);
 });
 
 function notify() {
@@ -134,6 +134,7 @@ function notify() {
     // check if the user is okay to get some notification
     else if (Notification.permission === "granted") {
         // If it's okay let's create a notification
+        // fsm()
         var notification = new Notification("Vibrate!!");
     }
     //  ask the user for permission
@@ -147,6 +148,7 @@ function notify() {
 
             // If the user is okay, let's create a notification
             if (permission === "granted") {
+                // fsm()
                 var notification = new Notification("Hi there!");
             }
         });
