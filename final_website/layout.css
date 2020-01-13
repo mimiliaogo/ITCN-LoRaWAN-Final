@@ -1,0 +1,76 @@
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Noto Sans;
+}
+#panel {
+    width: 25%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0px;
+    float: left;
+    background-color: white;
+    color: black;
+}
+#header {
+    padding: 20px;
+    color: black;
+}
+.button {
+    font-size: 14px;
+    border: none;
+    padding: 10px 25px;
+    color: #ffffff;
+    font-weight: 500;
+    background-color: #1a73e8;
+    border-radius: 4px;
+}
+h1 {
+    margin: 0;
+    font-weight: 400;
+    color: #333;
+}
+h2, h3 {
+    font-weight: 400;
+}
+#content {
+    padding: 0px 20px;
+}
+.card {
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 0px 20px 20px;;
+    border: 1px solid rgb(219, 220, 224);
+    border-radius: 10px;
+    overflow: auto;
+}
+.card h3 {
+    margin-bottom: 0px;
+}
+hr {
+    border: 0.6px solid rgb(224, 224, 224);
+}
+.card h5 {
+    margin-top: 0px;
+    padding-top: 0px;
+    font-weight: 100;
+    color: #555;
+}
+#map {
+    height: 100%;
+    width: 75%;
+    float: left;
+}
+span {
+    font-size: 16px;
+}

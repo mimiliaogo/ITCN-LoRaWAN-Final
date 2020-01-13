@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bike Console</title>
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="layout.css">
+        <link rel="shortcut icon" href="image/bike_icon.png" type="image/x-icon" />
+    </head>
+
+    <body>
+        <div id="panel">
+            <div id="header">
+                <h1>Bike Console</h1>
+            </div>
+            <div id="content">
+                <div class="card">
+                    <h3>Locate my bike</h3>
+                    <hr>
+                    <span>Longtitude: </span><span id="span_lng"></span>
+                    <br>
+                    <span>Latitude: </span><span id="span_lat"></span>
+                    <hr>
+                    <button id="btn_get_bike_loc" class="button">Get bike Location</button>
+                </div>
+                
+                <div class="card">
+                    <h3>Temperature and humidity</h3>
+                    <hr>
+                    <div id="temperature">No data QQ</div>
+                    <div id="warm">No data QQ</div>
+                </div>
+                
+                <div class="card">
+                    <h3>Weather</h3>
+                    <hr>
+                    <div class="weather">
+                        <div class="weather-img">
+
+                        </div>
+                        <div class="bike-advice">
+
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="toggleStreetView();" class="button">street view</button>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7p1JKKdcDXaXdBRh6xZ0FdtMOxxTm1LM&callback=initMap" async defer></script>
+        
+        <script src="bikeLocation.js"></script>
+        <script src="weather.js"></script>
+        <script src="sensor.js"></script>
+    </body>
+
+</html>
