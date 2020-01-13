@@ -66,7 +66,7 @@ function showValue () {
                 if (warmNotNull === 0) warmAdd.innerHTML = "No humidity data QQ";
                 else {
                     previousWarm = warmValue/warmNotNull;
-                    warmAdd.innerHTML = "Humidity is : " + (warmValue/warmNotNull).toString().match(/\d+\.\d{1}/)[0];
+                    warmAdd.innerHTML = "Humidity is : " + (warmValue/warmNotNull);
                 }
 
                 var tempValue = 0;
@@ -80,7 +80,7 @@ function showValue () {
                 if (tempNotNull === 0) tempAdd.innerHTML = "No temperture data QQ";
                 else {
                     previousTemp = tempValue/tempNotNull;
-                    tempAdd.innerHTML = "Temperature is : " + (tempValue/tempNotNull).toString().match(/\d+\.\d{1}/)[0];
+                    tempAdd.innerHTML = "Temperature is : " + (tempValue/tempNotNull);
                 }
             }
         },
