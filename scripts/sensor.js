@@ -56,27 +56,31 @@ function showValue () {
                 }
             } else {
                 var warmValue = 0;
+                var warmNotNull = 0;
                 for (var i = 0; i < response.length; ++i) {
                     if (response[i]['humidity'] != null) {
+                        warmNotNull += 1;
                         warmValue += parseFloat(response[i]['humidity']);
                     }
                 }
-                if (warmValue === 0) warmAdd.innerHTML = "No humidity data QQ";
+                if (warmNotNull === 0) warmAdd.innerHTML = "No humidity data QQ";
                 else {
-                    previousWarm = warmValue/response.length;
-                    warmAdd.innerHTML = "Humidity is : " + warmValue/response.length;
+                    previousWarm = warmValue/warmNotNull;
+                    warmAdd.innerHTML = "Humidity is : " + (warmValue/warmNotNull).toString().match(/\d+\.\d{1}/)[0];
                 }
 
                 var tempValue = 0;
+                var tempNotNull = 0;
                 for (var i = 0; i < response.length; ++i) {
                     if (response[i]['temperature'] != null) {
+                        tempNotNull += 1;
                         tempValue += parseFloat(response[i]['temperature']);
                     }
                 }
-                if (tempValue === 0) tempAdd.innerHTML = "No temperture data QQ";
+                if (tempNotNull === 0) tempAdd.innerHTML = "No temperture data QQ";
                 else {
-                    previousTemp = tempValue/response.length;
-                    tempAdd.innerHTML = "Temperature is : " + tempValue/response.length;
+                    previousTemp = tempValue/tempNotNull;
+                    tempAdd.innerHTML = "Temperature is : " + (tempValue/tempNotNull).toString().match(/\d+\.\d{1}/)[0];
                 }
             }
         },
