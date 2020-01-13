@@ -48,8 +48,8 @@ function showValue () {
             console.log(response);
             if (response.length === 0) {
                 if (previousTemp !== 0 && previousWarm !== 0) {
-                    warmAdd.innerHTML = "Humidity is : " + previousWarm;
-                    tempAdd.innerHTML = "Temperature is : " + previousTemp;
+                    warmAdd.innerHTML = "Humidity is : " + previousWarm.toFixed(3);
+                    tempAdd.innerHTML = "Temperature is : " + previousTemp.toFixed(3);
                 } else {
                     warmAdd.innerHTML = "Please turn on the sensors :)";
                     tempAdd.innerHTML = "Please turn on the sensors :)";
