@@ -1,0 +1,14 @@
+body {
+    background-color: rgb(48, 145, 190);
+    text-align: center;
+}
+
+.weather-text {
+    font-size: 3rem;
+}
+img {
+    width: 300px;
+}
+.bike-advice {
+    font-size: 2rem;
+}

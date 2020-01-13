@@ -50,6 +50,7 @@ window.onload = function() {
     var weatherImg = document.querySelector(".weather-img");
     var weatherText = document.querySelector(".weather-text");
     var bikeAdvice = document.querySelector(".bike-advice");
+    this.console.log(this.weatherGroup);
     weatherImg.innerHTML = `<img src="image/${weatherGroup}.png" alt="clear">`;
     weatherText.textContent = `Today's weather is ${weatherDescription}`;
 
