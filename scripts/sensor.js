@@ -33,9 +33,11 @@ function calculate_date_filter() {
     
     //var date_filter = "&date_filter=" + date_s + hour_before + ":00:00+-+" + date_s + hour_after + ":00:00";
     var date_filter = "&date_filter=" + date_s + timeStringInterval+ "+-+" + date_s + timeStringNow;
-    //var date_filter = "&date_filter=" + "2020-01-10 23:58:00+-+2020-01-10 23:58:10";
+    //var date_filter = "&date_filter=" + "2020-01-13 14:06:31+-+2020-01-13 14:06:32";
     return date_filter;
 }
+var previousTemp = 0; 
+var previousWarm = 0; 
 function showValue () {
     $.ajax({
         type: "POST",
@@ -43,16 +45,39 @@ function showValue () {
         dataType: "json",
         async: false,
         success: function (response) {
-//            console.log(response);
-            if (response[0]['humidity'] != null) {
-                warmAdd.innerHTML = "Warm is : " + response[0]['humidity'];
-            }else {
-                warmAdd.innerHTML = "No humidity data QQ ";
-            }
-            if (response[0]['temperature'] != null) {
-                tempAdd.innerHTML = "Temperature is : " + response[0]['humidity'];
-            }else {
-                    tempAdd.innerHTML = "No temperature data QQ ";
+            console.log(response);
+            if (response.length === 0) {
+                if (previousTemp !== 0 && previousWarm !== 0) {
+                    warmAdd.innerHTML = "Humidity is : " + previousWarm;
+                    tempAdd.innerHTML = "Temperature is : " + previousTemp;
+                } else {
+                    warmAdd.innerHTML = "Please turn on the sensors :)";
+                    tempAdd.innerHTML = "Please turn on the sensors :)";
+                }
+            } else {
+                var warmValue = 0;
+                for (var i = 0; i < response.length; ++i) {
+                    if (response[i]['humidity'] != null) {
+                        warmValue += parseFloat(response[i]['humidity']);
+                    }
+                }
+                if (warmValue === 0) warmAdd.innerHTML = "No humidity data QQ";
+                else {
+                    previousWarm = warmValue/response.length;
+                    warmAdd.innerHTML = "Humidity is : " + warmValue/response.length;
+                }
+
+                var tempValue = 0;
+                for (var i = 0; i < response.length; ++i) {
+                    if (response[i]['temperature'] != null) {
+                        tempValue += parseFloat(response[i]['temperature']);
+                    }
+                }
+                if (tempValue === 0) tempAdd.innerHTML = "No temperture data QQ";
+                else {
+                    previousTemp = tempValue/response.length;
+                    tempAdd.innerHTML = "Temperature is : " + tempValue/response.length;
+                }
             }
         },
         headers: {
